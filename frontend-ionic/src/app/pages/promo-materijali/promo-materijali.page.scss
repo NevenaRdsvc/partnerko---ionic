@@ -1,0 +1,227 @@
+// ─── Material Groups ──────────────────────────────────────────────────────────
+.material-group {
+  padding: 0 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// ─── Material Card ────────────────────────────────────────────────────────────
+.material-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: transform 0.12s;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.material-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--app-primary-light);
+  color: var(--app-primary);
+  font-size: 20px;
+
+  &.is-video {
+    background: rgba(124, 58, 237, 0.10);
+    color: var(--app-purple);
+  }
+}
+
+.material-info {
+  flex: 1;
+  min-width: 0;
+}
+
+// ─── Image Grid ───────────────────────────────────────────────────────────────
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 0 16px 8px;
+}
+
+.image-card {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--app-surface-2);
+  transition: transform 0.12s;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.image-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-card-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 8px 8px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 100%);
+}
+
+.tag-chip-dark {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.image-delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.material-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--app-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.material-date {
+  font-size: 11px;
+  color: var(--app-text-muted);
+  margin-top: 2px;
+}
+
+// ─── Tags ─────────────────────────────────────────────────────────────────────
+.material-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.tag-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--app-primary);
+  background: var(--app-primary-light);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+// ─── Delete Button ────────────────────────────────────────────────────────────
+.delete-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: var(--app-danger-light);
+  color: var(--app-danger);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+// ─── Upload Form ──────────────────────────────────────────────────────────────
+.form-select {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  --padding-start: 14px;
+  --padding-end: 40px;
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+
+  &::part(icon) {
+    display: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--app-text-muted);
+    border-bottom: 2px solid var(--app-text-muted);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+}
+
+.file-pick-wrap {
+  margin-top: 6px;
+}
+
+.file-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px dashed var(--app-border);
+  border-radius: var(--app-radius-sm);
+  background: var(--app-surface-2);
+  color: var(--app-text-secondary);
+  font-size: 14px;
+  font-family: var(--ion-font-family);
+  cursor: pointer;
+  text-align: left;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.file-input {
+  display: none;
+}
+
+.error-msg {
+  padding: 10px 12px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: var(--app-radius-xs);
+  font-size: 13px;
+  color: var(--app-danger);
+}
+
+.search {
+  background-color: transparent !important;
+}

@@ -1,0 +1,144 @@
+// ─── Year Row ─────────────────────────────────────────────────────────────────
+.year-row {
+  display: flex;
+  gap: 6px;
+  padding: 12px 16px 16px;
+  flex-wrap: wrap;
+}
+
+.year-chip {
+  padding: 4px 14px;
+  border: 1px solid var(--app-border);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--app-text-muted);
+  background: var(--app-surface-2);
+  cursor: pointer;
+  font-family: var(--ion-font-family);
+  transition: all 0.15s;
+
+  &.active {
+    background: var(--app-primary-light);
+    border-color: var(--app-primary);
+    color: var(--app-primary);
+    font-weight: 600;
+  }
+}
+
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
+.skeleton-list {
+  padding: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.skel-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.skel-body {
+  flex: 1;
+}
+
+.skel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.skel-name {
+  height: 14px;
+  width: 52%;
+  border-radius: 4px;
+}
+
+.skel-pill {
+  flex-shrink: 0;
+  height: 22px;
+  width: 76px;
+  border-radius: 20px;
+}
+
+// ─── Item Sliding ─────────────────────────────────────────────────────────────
+.partner-list ion-item-sliding {
+  display: block;
+  border-radius: var(--app-radius);
+  overflow: hidden;
+}
+
+// ─── Partner List ─────────────────────────────────────────────────────────────
+.partner-list {
+  padding: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.partner-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: transform 0.12s;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.partner-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--app-primary-light);
+  color: var(--app-primary);
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.partner-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.partner-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--app-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.partner-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-chevron {
+  flex-shrink: 0;
+  font-size: 16px;
+  color: var(--app-text-muted);
+  margin-top: 3px;
+}

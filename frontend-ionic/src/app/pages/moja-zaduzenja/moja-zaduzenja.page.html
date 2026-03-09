@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Moja zaduženja</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [value]="activeTab" (ionChange)="activeTab = $any($event.detail.value)">
+      <ion-segment-button value="robni">
+        <ion-label>Robni</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="finansijski">
+        <ion-label>Finansijski</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (isLoading) {
+  <div class="loading-center">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else {
+  @if (activeTab === 'robni') {
+  @if (robni.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <ion-icon name="business-outline"></ion-icon>
+    </div>
+    <p class="empty-title">Nema zaduženja</p>
+    <p class="empty-sub">Nisi zadužen ni za jednog robnog partnera.</p>
+  </div>
+  } @else {
+  <div class="page-topbar">
+    <span class="page-title">Robni partneri <span class="count-badge">{{ robni.length }}</span></span>
+  </div>
+  <div class="partner-list">
+    @for (partner of robni; track partner.ID) {
+    <ion-item-sliding>
+      <div class="partner-card app-card" (click)="openDetaljiModal(partner)">
+        <div class="partner-icon">{{ getInitials(partner.naziv) }}</div>
+        <div class="partner-info">
+          <div class="partner-row">
+            <div class="partner-name">{{ partner.naziv }}</div>
+            <span class="status-pill" [class]="getStanjeClass(partner.stanje)">
+              {{ partner.stanje || 'Bez statusa' }}
+            </span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-chevron"></ion-icon>
+      </div>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" expandable (click)="openDetaljiModal(partner)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </div>
+  }
+  }
+
+  @if (activeTab === 'finansijski') {
+  @if (finansijski.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <ion-icon name="business-outline"></ion-icon>
+    </div>
+    <p class="empty-title">Nema zaduženja</p>
+    <p class="empty-sub">Nisi zadužen ni za jednog finansijskog partnera.</p>
+  </div>
+  } @else {
+  <div class="page-topbar">
+    <span class="page-title">Finansijski partneri <span class="count-badge">{{ finansijski.length }}</span></span>
+  </div>
+  <div class="partner-list">
+    @for (partner of finansijski; track partner.ID) {
+    <ion-item-sliding>
+      <div class="partner-card app-card" (click)="openDetaljiModal(partner)">
+        <div class="partner-icon">{{ getInitials(partner.naziv) }}</div>
+        <div class="partner-info">
+          <div class="partner-row">
+            <div class="partner-name">{{ partner.naziv }}</div>
+            <span class="status-pill" [class]="getStanjeClass(partner.stanje)">
+              {{ partner.stanje || 'Bez statusa' }}
+            </span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-chevron"></ion-icon>
+      </div>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" expandable (click)="openDetaljiModal(partner)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </div>
+  }
+  }
+  }
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="zatvori()" fill="clear">Otkaži</ion-button>
+    </ion-buttons>
+    <ion-title>Novi korisnik</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-section" style="padding-top:20px">
+    <label class="form-label">Ime *</label>
+    <input class="form-input" [(ngModel)]="form.ime" type="text" placeholder="Unesite ime">
+
+    <label class="form-label" style="margin-top:14px">Prezime *</label>
+    <input class="form-input" [(ngModel)]="form.prezime" type="text" placeholder="Unesite prezime">
+
+    <label class="form-label" style="margin-top:14px">Korisničko ime *</label>
+    <input class="form-input" [(ngModel)]="form.username" type="text" placeholder="Unesite username" autocomplete="off">
+
+    <label class="form-label" style="margin-top:14px">Lozinka *</label>
+    <input class="form-input" [(ngModel)]="form.lozinka" type="password" placeholder="Unesite lozinku" autocomplete="new-password">
+
+    <label class="form-label" style="margin-top:14px">Tip korisnika</label>
+    <button class="modal-select" type="button" (click)="openTipSelect()">
+      {{ form.tip || 'Izaberi tip' }}
+    </button>
+
+    <label class="form-label" style="margin-top:14px">Projekat</label>
+    <button class="modal-select" type="button" [class.placeholder]="!form.iteracijaId" (click)="openProjekatSelect()">
+      {{ selectedProjekatLabel || 'Izaberi projekat' }}
+    </button>
+
+    @if (errorMsg) {
+      <div class="error-msg" style="margin-top:14px">{{ errorMsg }}</div>
+    }
+
+    <button
+      class="btn-primary full"
+      style="margin-top:20px"
+      [disabled]="saving"
+      (click)="sacuvaj()">
+      @if (saving) { <ion-spinner name="crescent" style="width:16px;height:16px;color:#fff"></ion-spinner> }
+      Kreiraj korisnika
+    </button>
+  </div>
+</ion-content>

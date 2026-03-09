@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="zatvori()" fill="clear">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ data?.naziv }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (data) {
+    <!-- Stats -->
+    <div class="stats-row" style="padding-top:16px">
+      <div class="stat-card stat-blue">
+        <div class="stat-value">{{ data.brojCimanja }}</div>
+        <div class="stat-label">Cimanja</div>
+      </div>
+      <div class="stat-card stat-green">
+        <div class="stat-value">{{ data.brojOdobravanja }}</div>
+        <div class="stat-label">Odobreno</div>
+      </div>
+      <div class="stat-card stat-red">
+        <div class="stat-value">{{ data.brojOdbijanja }}</div>
+        <div class="stat-label">Odbijeno</div>
+      </div>
+    </div>
+
+    <!-- Company info -->
+    <div class="form-section">
+      <div class="section-label" style="padding:14px 0 6px">Podaci o kompaniji</div>
+
+      <label class="form-label">Naziv</label>
+      <input class="form-input" [(ngModel)]="data.naziv" type="text" placeholder="Naziv kompanije" [disabled]="!canEdit">
+
+      <label class="form-label" style="margin-top:12px">Websajt</label>
+      <input class="form-input" [(ngModel)]="data.websajt" type="url" placeholder="https://..." [disabled]="!canEdit">
+
+      <label class="form-label" style="margin-top:12px">Kontakt</label>
+      <input class="form-input" [(ngModel)]="data.kontakt" type="text" placeholder="Kontakt osoba" [disabled]="!canEdit">
+    </div>
+
+    <!-- Iteration info -->
+    <div class="section-divider"></div>
+
+    <div class="form-section">
+      <div class="section-label" style="padding:14px 0 6px">Iteracija</div>
+
+      <label class="form-label">Stanje</label>
+      @if (canEdit) {
+        <button class="modal-select" type="button" [class.placeholder]="!data.stanje" (click)="openStanjeSelect()">
+          {{ data.stanje || 'Izaberi stanje' }}
+        </button>
+      } @else {
+        <div class="readonly-field">{{ data.stanje || 'Nije dodeljeno' }}</div>
+      }
+
+      <label class="form-label" style="margin-top:12px">Zadužen</label>
+      @if (canEdit) {
+        <button class="modal-select" type="button" (click)="openKorisnikSelect()">
+          {{ selectedKorisnikLabel }}
+        </button>
+      } @else {
+        <div class="readonly-field">{{ data.zaduzen || '—' }}</div>
+      }
+
+      <label class="form-label" style="margin-top:12px">Napomena</label>
+      <textarea class="form-input" [(ngModel)]="data.napomena" rows="3" placeholder="Unesite napomenu..." [disabled]="!canEdit"></textarea>
+    </div>
+
+    <!-- Notes history -->
+    @if (data.napomene && data.napomene.length > 0) {
+      <div class="section-divider"></div>
+      <div class="section-label">Istorija napomena</div>
+      <div class="notes-list">
+        @for (napomena of data.napomene; track napomena) {
+          <div class="note-item">{{ napomena }}</div>
+        }
+      </div>
+    }
+  }
+</ion-content>
+
+@if (canEdit) {
+  <div class="action-footer">
+    <button class="btn-primary full" [disabled]="saving" (click)="sacuvaj()">
+      @if (saving) { <ion-spinner name="crescent" style="width:16px;height:16px;color:#fff"></ion-spinner> }
+      Sačuvaj izmene
+    </button>
+  </div>
+}

@@ -1,0 +1,99 @@
+.company-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px 16px;
+}
+
+.company-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+
+  &.selected {
+    border-color: var(--app-primary);
+    background: var(--app-primary-light);
+  }
+}
+
+.company-avatar {
+  flex-shrink: 0;
+}
+
+.company-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.company-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--app-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.company-meta {
+  font-size: 12px;
+  color: var(--app-text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.company-stats {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.stat-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+
+  &.green {
+    color: var(--app-success);
+    background: var(--app-success-light);
+  }
+
+  &.red {
+    color: var(--app-danger);
+    background: var(--app-danger-light);
+  }
+
+  &.gray {
+    color: var(--app-text-muted);
+    background: var(--app-surface-2);
+  }
+}
+
+.select-circle {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--app-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+
+  &.checked {
+    background: var(--app-primary);
+    border-color: var(--app-primary);
+    color: #fff;
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+}

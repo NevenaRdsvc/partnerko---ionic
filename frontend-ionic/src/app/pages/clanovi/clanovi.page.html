@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Članovi</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [value]="selectedProjekat?.naziv" scrollable="false"
+      (ionChange)="selectProjekatByNaziv($any($event.detail.value))">
+      @for (p of projekti; track p.naziv) {
+      <ion-segment-button [value]="p.naziv">
+        <ion-label>{{ p.shortLabel }}</ion-label>
+      </ion-segment-button>
+      }
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  @if (errorMsg) {
+  <div class="error-banner">{{ errorMsg }}</div>
+  }
+
+  @if (loadingClanovi) {
+  <div class="loading-center">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else {
+  <div class="page-topbar">
+    <span class="page-title">Članovi <span class="count-badge">{{ clanovi.length }}</span></span>
+  </div>
+
+  @if (clanovi.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <ion-icon name="person-outline"></ion-icon>
+    </div>
+    <p class="empty-title">Nema članova</p>
+    <p class="empty-sub">
+      @if (isAdmin || isKoordinator) {
+      Dodajte prvog člana projekta.
+      } @else {
+      Još uvek nema članova na ovom projektu.
+      }
+    </p>
+  </div>
+  } @else {
+  <div class="clan-list">
+    @for (clan of clanovi; track clan.id) {
+    <div class="clan-card app-card">
+      <div class="avatar">{{ clan.ime[0] }}{{ clan.prezime[0] }}</div>
+      <div class="clan-info">
+        <div class="clan-name">{{ clan.ime }} {{ clan.prezime }}</div>
+        <div class="clan-meta">{{ clan.username }} · {{ clan.tip }}</div>
+      </div>
+      @if (isAdmin || isKoordinator) {
+      <button class="remove-btn" (click)="ukloni(clan)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </button>
+      }
+    </div>
+    }
+  </div>
+  }
+  }
+
+  @if (isAdmin || isKoordinator) {
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openKreirajModal()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  }
+</ion-content>

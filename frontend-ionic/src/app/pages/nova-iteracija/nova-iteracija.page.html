@@ -1,0 +1,61 @@
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Nova Iteracija</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    @if (isLoading) {
+      <div class="loading-center">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    } @else {
+      <div class="page-topbar">
+        <h2 class="page-title">Projekti</h2>
+      </div>
+
+      <div class="projekti-list">
+        @for (projekat of projekti; track projekat.naziv; let i = $index) {
+          <div class="iter-card app-card">
+            <div class="iter-header">
+              <div class="project-avatar">
+                <img [src]="projekat.image" [alt]="projekat.displayNaziv">
+              </div>
+              <div class="iter-info">
+                <div class="iter-name">{{ projekat.displayNaziv }}</div>
+                @if (projekat.trenutna) {
+                  <div class="iter-year">Trenutna: {{ projekat.trenutna.godina }}</div>
+                }
+              </div>
+            </div>
+
+            @if (projekat.error) {
+              <div class="error-msg" style="margin-bottom:10px">{{ projekat.error }}</div>
+            }
+
+            @if (projekat.createdId) {
+              <div class="success-msg" style="margin-bottom:10px">
+                Iteracija {{ projekat.trenutna?.godina }} kreirana!
+              </div>
+              <button class="btn-secondary full" (click)="idNaIteraciju(projekat)">
+                Idi na iteraciju
+              </button>
+            } @else {
+              <button
+                class="btn-primary full"
+                [disabled]="projekat.isCreating || !projekat.trenutna"
+                (click)="requestConfirm(projekat)">
+                @if (projekat.isCreating) {
+                  <ion-spinner name="crescent" style="width:16px;height:16px;color:#fff"></ion-spinner>
+                }
+                Kreiraj iteraciju {{ projekat.trenutna ? projekat.trenutna.godina + 1 : '' }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    }
+  </ion-content>

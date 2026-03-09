@@ -1,0 +1,140 @@
+<ion-split-pane contentId="main-content" [when]="isIos ? 'xl' : 'lg'">
+
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+
+      <ion-list id="menu-list">
+        <div class="sidebar-logo-wrap">
+          <img src="assets/images/beliLogo.png" class="sidebar-logo" alt="Partnerko">
+        </div>
+
+        @if (isClan) {
+        <div class="sidebar-section-label">Pregled</div>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" [routerLink]="['/moja-zaduzenja']"
+            routerLinkActive="selected" lines="none" detail="false">
+            <ion-icon aria-hidden="true" slot="start" name="checkmark-done-outline"></ion-icon>
+            <ion-label>Moja zaduženja</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        }
+
+        @if (!isKompanija) {
+        <div class="sidebar-section-label">Partneri</div>
+
+        <div class="nav-group">
+          <button class="nav-group-btn" (click)="robniOpen = !robniOpen">
+            <ion-icon name="cube-outline"></ion-icon>
+            <span>Robni</span>
+            <ion-icon class="nav-chevron" [class.open]="robniOpen" name="chevron-forward-outline"></ion-icon>
+          </button>
+          @if (robniOpen) {
+          <div class="nav-sub-items">
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[partneriUrl]"
+                [queryParams]="{ tipPartnera: 'robni' }"
+                [class.selected]="isNavActive('robni-partneri')" lines="none" detail="false" class="sub-item">
+                <ion-label>Svi</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[partneriUrl]"
+                [queryParams]="{ tipPartnera: 'robni', status: 'potvrdjeni' }"
+                [class.selected]="isNavActive('robni-partneri', 'potvrdjeni')" lines="none" detail="false" class="sub-item">
+                <ion-label>Potvrđeni</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[partneriUrl]"
+                [queryParams]="{ tipPartnera: 'robni', status: 'odbijeni' }"
+                [class.selected]="isNavActive('robni-partneri', 'odbijeni')" lines="none" detail="false" class="sub-item">
+                <ion-label>Odbijeni</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
+          }
+        </div>
+
+        <div class="nav-group">
+          <button class="nav-group-btn" (click)="finansijskiOpen = !finansijskiOpen">
+            <ion-icon name="cash-outline"></ion-icon>
+            <span>Finansijski</span>
+            <ion-icon class="nav-chevron" [class.open]="finansijskiOpen" name="chevron-forward-outline"></ion-icon>
+          </button>
+          @if (finansijskiOpen) {
+          <div class="nav-sub-items">
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[finansijskiUrl]"
+                [queryParams]="{ tipPartnera: 'finansijski' }"
+                [class.selected]="isNavActive('finansijski-partneri')" lines="none" detail="false" class="sub-item">
+                <ion-label>Svi</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[finansijskiUrl]"
+                [queryParams]="{ tipPartnera: 'finansijski', status: 'potvrdjene' }"
+                [class.selected]="isNavActive('finansijski-partneri', 'potvrdjene')" lines="none" detail="false" class="sub-item">
+                <ion-label>Potvrđene</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerDirection="root" [routerLink]="[finansijskiUrl]"
+                [queryParams]="{ tipPartnera: 'finansijski', status: 'odbijene' }"
+                [class.selected]="isNavActive('finansijski-partneri', 'odbijene')" lines="none" detail="false" class="sub-item">
+                <ion-label>Odbijene</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
+          }
+        </div>
+        }
+
+        @if (!isClan || !isKompanija) {
+        <div class="sidebar-section-label">Opšte</div>
+        }
+
+        @if (!isClan) {
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" [routerLink]="['/promo-materijali']"
+            routerLinkActive="selected" lines="none" detail="false">
+            <ion-icon aria-hidden="true" slot="start" name="megaphone-outline"></ion-icon>
+            <ion-label>Promo materijali</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        }
+
+        @if (!isKompanija && !isClan) {
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" [routerLink]="[clanoviUrl]"
+            routerLinkActive="selected" lines="none" detail="false">
+            <ion-icon aria-hidden="true" slot="start" ios="people-outline" md="people-sharp"></ion-icon>
+            <ion-label>Članovi</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        }
+
+        @if (isAdmin) {
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" [routerLink]="['/nova-iteracija']"
+            [queryParams]="novaIteracijaQueryParams" routerLinkActive="selected" lines="none" detail="false">
+            <ion-icon aria-hidden="true" slot="start" ios="add-circle-outline" md="add-circle-sharp"></ion-icon>
+            <ion-label>Nova iteracija</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        }
+      </ion-list>
+
+      <ion-list id="logout-list">
+        <ion-menu-toggle auto-hide="false">
+          <ion-item lines="none" detail="false" button (click)="logout()">
+            <ion-icon aria-hidden="true" slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
+            <ion-label>Odjavi se</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane>

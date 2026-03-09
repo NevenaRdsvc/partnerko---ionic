@@ -1,0 +1,51 @@
+import { CreateIteracijaProjektaDto } from './dto/create-iteracija-projekta.dto';
+import { UpdateIteracijaProjektaDto } from './dto/update-iteracija-projekta.dto';
+import { IteracijaProjekta } from './entities/iteracija-projekta.entity';
+import { Repository } from 'typeorm/repository/Repository';
+import { NazivProjekta } from 'src/enums/naziv-projekta';
+import { KompanijaIteracija } from '../kompanija-iteracija/entities/kompanija-iteracija.entity';
+import { Kompanija } from '../kompanija/entities/kompanija.entity';
+import { TipPartnera } from 'src/enums/tip-partnera';
+import { BatchKompanijaIteracijaDto } from './dto/batch-kompanija-iteracija.dto';
+export declare class IteracijaProjektaService {
+    private readonly iteracijaProjektaRepository;
+    private readonly kompanijaIteracijaRepository;
+    private readonly kompanijaRepository;
+    constructor(iteracijaProjektaRepository: Repository<IteracijaProjekta>, kompanijaIteracijaRepository: Repository<KompanijaIteracija>, kompanijaRepository: Repository<Kompanija>);
+    create(createIteracijaProjektaDto: CreateIteracijaProjektaDto): Promise<IteracijaProjekta>;
+    findLast(naziv: NazivProjekta): Promise<IteracijaProjekta | null>;
+    findAllByNaziv(naziv: NazivProjekta): Promise<IteracijaProjekta[]>;
+    findOne(id: number): Promise<IteracijaProjekta | null>;
+    update(id: number, updateIteracijaProjektaDto: UpdateIteracijaProjektaDto): string;
+    remove(id: number): Promise<import("typeorm").DeleteResult>;
+    batchAddKompanije(iteracijaId: number, dto: BatchKompanijaIteracijaDto): Promise<KompanijaIteracija[]>;
+    findDostupne(iteracijaId: number, tipPartnera: TipPartnera): Promise<{
+        brojCimanja: number;
+        brojOdobravanja: number;
+        brojOdbijanja: number;
+        napomene: string[];
+        id: number;
+        naziv: string;
+        websajt: string;
+        kontakt: string;
+        tip: TipPartnera;
+        kompanijaIteracije: KompanijaIteracija[];
+    }[]>;
+    findKompanije(iteracijaId: number, tipPartnera: TipPartnera, status?: string): Promise<{
+        ID: number;
+        naziv: string;
+        websajt: string;
+        kontakt: string;
+        zaduzen: string | null;
+        korisnikId: number;
+        datumCimanja: Date;
+        datumPodsetnik: Date;
+        datumPoziva: Date;
+        odobreno: boolean | null;
+        stanje: string;
+        napomena: string;
+        brojCimanja: number;
+        brojOdobravanja: number;
+        brojOdbijanja: number;
+    }[]>;
+}

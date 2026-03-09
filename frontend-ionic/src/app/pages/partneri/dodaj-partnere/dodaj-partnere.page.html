@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="backUrl"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dodaj partnere</ion-title>
+
+  </ion-toolbar>
+  <ion-searchbar [(ngModel)]="searchTerm" placeholder="Pretraži kompanije..." animated>
+  </ion-searchbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if (loading) {
+  <div class="loading-center">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+  } @else if (filtriraneKompanije.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <ion-icon name="business-outline"></ion-icon>
+    </div>
+    <p class="empty-title">Nema kompanija</p>
+    <p class="empty-sub">Sve kompanije su već dodate ili nema rezultata pretrage.</p>
+  </div>
+  } @else {
+  <div class="company-list">
+    @for (kompanija of filtriraneKompanije; track kompanija.ID) {
+    <div class="company-row app-card" [class.selected]="isSelected(kompanija.ID)"
+      (click)="toggleSelektovan(kompanija.ID)">
+      <div class="company-avatar avatar">{{ kompanija.naziv[0] }}</div>
+      <div class="company-info">
+        <div class="company-name">{{ kompanija.naziv }}</div>
+        @if (kompanija.websajt) {
+        <div class="company-meta">{{ kompanija.websajt }}</div>
+        }
+        <div class="company-stats">
+          <span class="stat-chip green">{{ kompanija.brojOdobravanja }} ✓</span>
+          <span class="stat-chip red">{{ kompanija.brojOdbijanja }} ✗</span>
+          <span class="stat-chip gray">{{ kompanija.brojCimanja }} cim.</span>
+        </div>
+      </div>
+      <div class="select-circle" [class.checked]="isSelected(kompanija.ID)">
+        @if (isSelected(kompanija.ID)) {
+        <ion-icon name="checkmark-outline"></ion-icon>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  }
+</ion-content>
+
+<div class="action-footer">
+  <button class="btn-primary full" [disabled]="saving || selektovane.size === 0" (click)="potvrdi()">
+    @if (saving) { <ion-spinner name="crescent" style="width:16px;height:16px;color:#fff"></ion-spinner> }
+    Dodaj ({{ selektovane.size }})
+  </button>
+</div>

@@ -1,0 +1,165 @@
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Promo Materijali</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-searchbar placeholder="Pretraži materijale..." animated (ionInput)="onSearch($event)" class="search">
+      </ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    @if (materijali.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon-wrap">
+        <ion-icon name="document-outline"></ion-icon>
+      </div>
+      <p class="empty-title">Nema materijala</p>
+      <p class="empty-sub">Uploadujte prvi promo materijal.</p>
+    </div>
+    } @else {
+    @for (group of materijaliPoKompaniji; track group.naziv) {
+    <div class="section-label">{{ group.naziv }}</div>
+
+    @if (images(group.stavke).length > 0) {
+    <div class="image-grid">
+      @for (materijal of images(group.stavke); track materijal.id) {
+      <div class="image-card" (click)="openMaterial(materijal)">
+        <img class="image-card-img" [src]="materijal.url" alt="">
+        @if (materijal.tags && materijal.tags.length > 0) {
+        <div class="image-card-footer">
+          <div class="material-tags">
+            @for (tag of materijal.tags; track tag) {
+            <span class="tag-chip tag-chip-dark">{{ tag }}</span>
+            }
+          </div>
+        </div>
+        }
+        @if (isAdmin || isKoordinator) {
+        <button class="image-delete-btn" (click)="confirmDelete(materijal); $event.stopPropagation()">
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+        }
+      </div>
+      }
+    </div>
+    }
+
+    @if (nonImages(group.stavke).length > 0) {
+    <div class="material-group">
+      @for (materijal of nonImages(group.stavke); track materijal.id) {
+      <div class="material-card app-card" (click)="openMaterial(materijal)">
+        <div class="material-icon-wrap" [class.is-video]="isVideo(materijal.url)">
+          <ion-icon [name]="isVideo(materijal.url) ? 'videocam-outline' : 'document-outline'"></ion-icon>
+        </div>
+        <div class="material-info">
+          <div class="material-name">{{ materijal.originalnoIme }}</div>
+          <div class="material-date">{{ materijal.datumKreiranja | date:'d.M.yyyy' }}</div>
+          @if (materijal.tags && materijal.tags.length > 0) {
+          <div class="material-tags">
+            @for (tag of materijal.tags; track tag) {
+            <span class="tag-chip">{{ tag }}</span>
+            }
+          </div>
+          }
+        </div>
+        @if (isAdmin || isKoordinator) {
+        <button class="delete-btn" (click)="confirmDelete(materijal); $event.stopPropagation()">
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+        }
+      </div>
+      }
+    </div>
+    }
+    }
+    }
+
+    @if (isAdmin || isKoordinator) {
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="isUploadModalOpen = true">
+        <ion-icon name="cloud-upload-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    }
+  </ion-content>
+
+  <!-- Upload Modal -->
+  <ion-modal [isOpen]="isUploadModalOpen" (didDismiss)="isUploadModalOpen = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="isUploadModalOpen = false" fill="clear">Otkaži</ion-button>
+          </ion-buttons>
+          <ion-title>Upload Materijala</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="form-section" style="padding-top:16px">
+          <label class="form-label">Kompanija</label>
+          <button class="modal-select" type="button" [class.placeholder]="!selectedKompanijaId" (click)="openKompanijaSelect()">
+            {{ selectedKompanijaNaziv || 'Izaberi kompaniju' }}
+          </button>
+
+          <label class="form-label" style="margin-top:16px">Fajl</label>
+          <div class="file-pick-wrap">
+            <input type="file" (change)="onFileSelected($event)" accept="*/*" class="file-input" #fileInput>
+            <button class="file-btn" (click)="fileInput.click()">
+              <ion-icon name="attach-outline"></ion-icon>
+              {{ fileName || 'Izaberite fajl' }}
+            </button>
+          </div>
+
+          @if (uploadError) {
+          <div class="error-msg" style="margin-top:12px">{{ uploadError }}</div>
+          }
+
+          <button class="btn-primary full" style="margin-top:20px"
+            [disabled]="isUploading || !selectedFile || !selectedKompanijaId" (click)="upload()">
+            @if (isUploading) { <ion-spinner name="crescent" style="width:18px;height:18px;color:#fff"></ion-spinner> }
+            Uploaduj
+          </button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Preview Modal -->
+  <ion-modal [isOpen]="selectedMaterial !== null" (didDismiss)="closeMaterial()">
+    <ng-template>
+      @if (selectedMaterial) {
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="closeMaterial()" fill="clear">Zatvori</ion-button>
+          </ion-buttons>
+          <ion-title>{{ selectedMaterial.originalnoIme }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button [href]="selectedMaterial.url" target="_blank" fill="clear">
+              <ion-icon slot="icon-only" name="open-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        @if (isVideo(selectedMaterial.url)) {
+        <video [src]="selectedMaterial.url" controls style="width:100%;border-radius:10px"></video>
+        } @else {
+        <img [src]="selectedMaterial.url" [alt]="selectedMaterial.originalnoIme"
+          style="width:100%;border-radius:10px;object-fit:contain">
+        }
+        @if (selectedMaterial.tags && selectedMaterial.tags.length > 0) {
+        <div class="material-tags" style="margin-top:16px">
+          @for (tag of selectedMaterial.tags; track tag) {
+          <span class="tag-chip">{{ tag }}</span>
+          }
+        </div>
+        }
+      </ion-content>
+      }
+    </ng-template>
+  </ion-modal>

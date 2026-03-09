@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="backUrl"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nova kompanija</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-topbar">
+    <h2 class="page-title">{{ tipLabel }} kompanija</h2>
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">Naziv *</label>
+    <input class="form-input" [(ngModel)]="naziv" type="text" placeholder="Naziv kompanije">
+
+    <label class="form-label" style="margin-top:16px">Websajt</label>
+    <input class="form-input" [(ngModel)]="websajt" type="url" placeholder="https://...">
+
+    <label class="form-label" style="margin-top:16px">Kontakt</label>
+    <input class="form-input" [(ngModel)]="kontakt" type="text" placeholder="Kontakt osoba">
+
+    @if (error) {
+    <div class="error-msg" style="margin-top:16px">{{ error }}</div>
+    }
+  </div>
+</ion-content>
+
+<div class="action-footer">
+  <button class="btn-primary full" [disabled]="saving || !naziv.trim()" (click)="potvrdi()">
+    @if (saving) { <ion-spinner name="crescent" style="width:16px;height:16px;color:#fff"></ion-spinner> }
+    Kreiraj
+  </button>
+</div>

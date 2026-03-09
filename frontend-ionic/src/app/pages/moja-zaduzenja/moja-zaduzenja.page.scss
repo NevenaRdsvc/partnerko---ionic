@@ -1,0 +1,81 @@
+.partner-list {
+  padding: 0 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.partner-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  cursor: pointer;
+  transition: transform 0.12s;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.partner-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--app-primary-light);
+  color: var(--app-primary);
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.partner-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.partner-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--app-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.partner-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card-chevron {
+  flex-shrink: 0;
+  font-size: 16px;
+  color: var(--app-text-muted);
+  margin-top: 3px;
+}
+
+.section-empty {
+  margin: 4px 16px 12px;
+  font-size: 13px;
+  color: var(--app-text-muted);
+}
+
+.tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  margin-left: 4px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--app-surface-2);
+  color: var(--app-text-muted);
+}

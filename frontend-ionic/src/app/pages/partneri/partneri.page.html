@@ -1,0 +1,95 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ pageTitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="page-topbar">
+    <span class="page-title">{{ pageTitle }} <span class="count-badge">{{ partneri.length }}</span></span>
+  </div>
+
+  @if (isLoading) {
+  <div class="skeleton-list">
+    @for (s of skeletonItems; track s) {
+    <div class="skeleton-card app-card">
+      <ion-skeleton-text animated class="skel-avatar"></ion-skeleton-text>
+      <div class="skel-body">
+        <div class="skel-row">
+          <ion-skeleton-text animated class="skel-name"></ion-skeleton-text>
+          <ion-skeleton-text animated class="skel-pill"></ion-skeleton-text>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  @if (isAdmin && iteracije.length > 1) {
+  <div class="year-row">
+    @for (it of iteracije; track it.id) {
+    <button class="year-chip" [class.active]="it.id === projekatId" (click)="switchIteracijaById(it.id)">
+      {{ it.godina }}
+    </button>
+    }
+  </div>
+  }
+
+  @if (partneri.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon-wrap">
+      <ion-icon name="business-outline"></ion-icon>
+    </div>
+    <p class="empty-title">Nema partnera</p>
+    <p class="empty-sub">{{ status ? 'Nema partnera sa odabranim statusom.' : 'Dodajte prvog partnera.' }}</p>
+  </div>
+  } @else {
+  <div class="partner-list">
+    @for (partner of partneri; track partner.ID) {
+    <ion-item-sliding>
+      <div class="partner-card app-card" (click)="openDetaljiModal(partner)">
+        <div class="partner-icon">{{ getInitials(partner.naziv) }}</div>
+        <div class="partner-info">
+          <div class="partner-row">
+            <div class="partner-name">{{ partner.naziv }}</div>
+            <span class="status-pill" [class]="getStanjeClass(partner.stanje)">
+              {{ partner.stanje || 'Bez statusa' }}
+            </span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-chevron"></ion-icon>
+      </div>
+      <ion-item-options side="end">
+        <ion-item-option color="primary" expandable (click)="openDetaljiModal(partner)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </div>
+  }
+  }
+
+  @if (isAdmin || isKoordinator || isClan) {
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="openDodajPartnere()" color="primary">
+        <ion-icon name="business-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="openKreirajPartner()" color="secondary">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  }
+</ion-content>

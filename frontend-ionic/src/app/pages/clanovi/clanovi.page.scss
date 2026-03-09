@@ -1,0 +1,71 @@
+// ─── Segment scrollbar ────────────────────────────────────────────────────────
+ion-segment {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// ─── Project Tab Images ───────────────────────────────────────────────────────
+.tab-project-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  margin-bottom: 2px;
+}
+
+// ─── Member List ──────────────────────────────────────────────────────────────
+.clan-list {
+  padding: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.clan-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.clan-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.clan-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.clan-meta {
+  font-size: 11px;
+  color: var(--app-text-muted);
+  margin-top: 2px;
+}
+
+.remove-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: var(--app-danger-light);
+  color: var(--app-danger);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+// ─── Error Banner ─────────────────────────────────────────────────────────────
+.error-banner {
+  margin: 12px 16px 0;
+  padding: 10px 12px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: var(--app-radius-xs);
+  font-size: 13px;
+  color: var(--app-danger);
+}

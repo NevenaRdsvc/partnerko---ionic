@@ -1,0 +1,72 @@
+// ─── Project / Iteration Cards ────────────────────────────────────────────────
+.projekti-list {
+  padding: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.iter-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.iter-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.project-avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ion-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 75%;
+    object-fit: contain;
+  }
+}
+
+.iter-info {
+  flex: 1;
+}
+
+.iter-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--app-text);
+}
+
+.iter-year {
+  font-size: 12px;
+  color: var(--app-text-muted);
+  margin-top: 2px;
+}
+
+.error-msg {
+  padding: 10px 12px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: var(--app-radius-xs);
+  font-size: 13px;
+  color: var(--app-danger);
+}
+
+.success-msg {
+  padding: 10px 12px;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  border-radius: var(--app-radius-xs);
+  font-size: 13px;
+  color: var(--app-success);
+}

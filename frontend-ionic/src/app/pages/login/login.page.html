@@ -1,0 +1,48 @@
+<ion-content class="login-content" [fullscreen]="true">
+  <div class="login-wrapper">
+
+    <div class="login-top">
+      <img src="assets/images/fonis.png" class="login-logo" alt="Partnerko">
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+      <div class="field-group">
+        <label class="field-label">Korisničko ime</label>
+        <div class="input-wrap"
+          [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <input class="field-input" formControlName="username" type="text" autocomplete="username"
+            placeholder="Unesite korisničko ime">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Lozinka</label>
+        <div class="input-wrap"
+          [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+          <input class="field-input" formControlName="password" [type]="showPassword ? 'text' : 'password'"
+            autocomplete="current-password" placeholder="Unesite lozinku">
+          <button type="button" class="eye-btn" (click)="togglePassword()">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (errorMessage) {
+      <div class="error-msg">{{ errorMessage }}</div>
+      }
+
+      <button type="submit" class="submit-btn" [disabled]="isLoading || loginForm.invalid">
+        @if (isLoading) {
+        <ion-spinner name="crescent" style="width:18px;height:18px;color:#fff"></ion-spinner>
+        } @else {
+        Prijavi se
+        }
+      </button>
+
+    </form>
+
+  </div>
+</ion-content>

@@ -1,0 +1,37 @@
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+
+      <ion-title>Projekti</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    @if (isLoading) {
+    <div class="loading-center">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+    } @else {
+    <div class="page-topbar">
+      <h2 class="page-title">Projekti <span class="count-badge">{{ projects.length }}</span></h2>
+    </div>
+
+    <div class="projekti-list">
+      @for (project of projects; track project.iteracija.id; let i = $index) {
+      <div class="project-card app-card" (click)="goToProject(project.iteracija.id)">
+        <div class="project-avatar">
+          <img [src]="project.image" [alt]="project.displayNaziv">
+        </div>
+        <div class="project-info">
+          <div class="project-name">{{ project.displayNaziv }}</div>
+          <div class="project-meta">Iteracija {{ project.iteracija.godina }}</div>
+        </div>
+        <div class="project-arrow">›</div>
+      </div>
+      }
+    </div>
+    }
+  </ion-content>
