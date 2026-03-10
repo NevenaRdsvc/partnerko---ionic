@@ -24,11 +24,12 @@ import {
   ModalController,
   ActionSheetController,
 } from '@ionic/angular/standalone';
+import { Share } from '@capacitor/share';
 import {
   addIcons
 } from 'ionicons';
 import {
-  closeOutline
+  closeOutline, shareOutline
 } from 'ionicons/icons';
 import {
   KompanijaResponseModel,
@@ -70,9 +71,7 @@ export class PartnerDetaljiModal implements OnInit {
     private kompanijaService: KompanijaService,
     private korisnikService: KorisnikService,
   ) {
-    addIcons({
-      closeOutline
-    });
+    addIcons({ closeOutline, shareOutline });
   }
 
   ngOnInit(): void {
@@ -173,6 +172,21 @@ export class PartnerDetaljiModal implements OnInit {
       ],
     });
     await sheet.present();
+  }
+
+  async share(): Promise<void> {
+    const { value } = await Share.canShare();
+    if (!value) return;
+
+    const lines = [this.data.naziv];
+    if (this.data.websajt) lines.push(`Websajt: ${this.data.websajt}`);
+    if (this.data.kontakt) lines.push(`Kontakt: ${this.data.kontakt}`);
+
+    await Share.share({
+      title: this.data.naziv,
+      text: lines.join('\n'),
+      dialogTitle: 'Podeli partnera',
+    });
   }
 
   zatvori() {

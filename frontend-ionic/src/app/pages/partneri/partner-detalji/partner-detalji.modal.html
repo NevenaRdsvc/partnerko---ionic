@@ -6,12 +6,16 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ data?.naziv }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="share()" fill="clear">
+        <ion-icon name="share-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   @if (data) {
-    <!-- Stats -->
     <div class="stats-row" style="padding-top:16px">
       <div class="stat-card stat-blue">
         <div class="stat-value">{{ data.brojCimanja }}</div>
@@ -27,7 +31,6 @@
       </div>
     </div>
 
-    <!-- Company info -->
     <div class="form-section">
       <div class="section-label" style="padding:14px 0 6px">Podaci o kompaniji</div>
 
@@ -41,7 +44,6 @@
       <input class="form-input" [(ngModel)]="data.kontakt" type="text" placeholder="Kontakt osoba" [disabled]="!canEdit">
     </div>
 
-    <!-- Iteration info -->
     <div class="section-divider"></div>
 
     <div class="form-section">
@@ -69,7 +71,6 @@
       <textarea class="form-input" [(ngModel)]="data.napomena" rows="3" placeholder="Unesite napomenu..." [disabled]="!canEdit"></textarea>
     </div>
 
-    <!-- Notes history -->
     @if (data.napomene && data.napomene.length > 0) {
       <div class="section-divider"></div>
       <div class="section-label">Istorija napomena</div>

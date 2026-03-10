@@ -7,7 +7,8 @@
 
   <ion-content [fullscreen]="true">
     <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
+      <ion-refresher-content pullingText="Povucite za osvežavanje" refreshingText="Osvežavanje...">
+      </ion-refresher-content>
     </ion-refresher>
 
     @if (isLoading) {
@@ -16,7 +17,7 @@
     </div>
     } @else {
     <div class="page-topbar">
-      <h2 class="page-title">Projekti <span class="count-badge">{{ projects.length }}</span></h2>
+      <h2 class="page-title">Projekti</h2>
     </div>
 
     <div class="projekti-list">

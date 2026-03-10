@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Partnerko</string>
+    <string name="title_activity_main">Partnerko</string>
+    <string name="package_name">rs.fonis.partnerko</string>
+    <string name="custom_url_scheme">rs.fonis.partnerko</string>
+</resources>

@@ -73,7 +73,6 @@ export class LayerComponent {
 
     this.updateAuthState();
 
-    // Handle Android hardware back button — go back if not on a root page
     this.platform.backButton.subscribeWithPriority(10, () => {
       const rootRoutes = ['/projekti', '/moja-zaduzenja', '/promo-materijali', '/nova-iteracija'];
       const onRoot = rootRoutes.some(r => this.currentUrl.startsWith(r));

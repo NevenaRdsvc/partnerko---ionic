@@ -66,7 +66,6 @@ export class PartneriPage implements OnInit {
     this.isKoordinator = this.accountService.isInRole('koordinator');
     this.isClan = this.accountService.isInRole('clan');
 
-    // Initialize synchronously from snapshot so ion-segment renders with the correct tab immediately
     this.projekatId = +this.route.snapshot.params['id'];
     this.tipPartnera = (this.route.snapshot.queryParams['tipPartnera'] as TipPartnera) || TipPartnera.ROBNI;
     this.status = this.route.snapshot.queryParams['status'] || '';

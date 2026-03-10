@@ -10,7 +10,10 @@
 <ion-content [fullscreen]="true">
 
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content
+      pullingText="Povucite za osvežavanje"
+      refreshingText="Osvežavanje...">
+    </ion-refresher-content>
   </ion-refresher>
 
   <div class="page-topbar">

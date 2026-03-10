@@ -87,7 +87,6 @@
     }
   </ion-content>
 
-  <!-- Upload Modal -->
   <ion-modal [isOpen]="isUploadModalOpen" (didDismiss)="isUploadModalOpen = false">
     <ng-template>
       <ion-header>
@@ -128,7 +127,6 @@
     </ng-template>
   </ion-modal>
 
-  <!-- Preview Modal -->
   <ion-modal [isOpen]="selectedMaterial !== null" (didDismiss)="closeMaterial()">
     <ng-template>
       @if (selectedMaterial) {

@@ -70,7 +70,6 @@ export class NovaIteracijaPage implements OnInit {
         };
         this.projekti.forEach(p => (p.trenutna = map[p.naziv]));
 
-        // If a specific projekatId was passed, show only that project
         const projekatId = +this.route.snapshot.queryParams['projekatId'];
         if (projekatId) {
           this.projekti = this.projekti.filter(p => p.trenutna?.id === projekatId);
